@@ -46,21 +46,6 @@ CB.init = function(){
 	}
 	
 	
-	Game.Objects['Cursor'].buyFunction = function(){		
-		if (this.amount>=1) Game.Unlock(['Reinforced index finger','Carpal tunnel prevention cream']);
-		if (this.amount>=10) Game.Unlock('Ambidextrous');
-		if (this.amount>=25) Game.Unlock('Thousand fingers');
-		if (this.amount>=50) Game.Unlock('Million fingers');
-		if (this.amount>=100) Game.Unlock('Billion fingers');
-		if (this.amount>=150) Game.Unlock('Trillion fingers');
-		if (this.amount>=200) Game.Unlock('Quadrillion fingers');
-		if (this.amount>=250) Game.Unlock('Quintillion fingers');
-		if (this.amount>=300) Game.Unlock('Sextillion fingers');
-		if (this.amount>=350) Game.Unlock('Septillion fingers');
-		if (this.amount>=400) Game.Unlock('Octillion fingers');
-		if (this.amount>=1) Game.Win('Click');if (this.amount>=2) Game.Win('Double-click');if (this.amount>=50) Game.Win('Mouse wheel');if (this.amount>=100) Game.Win('Of Mice and Men');if (this.amount>=200) Game.Win('The Digital');if (this.amount>=300) Game.Win('Extreme polydactyly');if (this.amount>=400) Game.Win('Dr. T');if (this.amount>=500) Game.Win('Thumbs, phalanges, metacarpals');
-	}	
-	
 	Game.Objects['Cursor'].buyFunction = (function(){
 			var cachedFunc = Game.Objects['Cursor'].buyFunction;
 			return function(){
@@ -69,7 +54,6 @@ CB.init = function(){
 				if (this.amount>=500) Game.Unlock('Decillion fingers');
 				if (this.amount>=550) Game.Unlock('Undecillion fingers');
 				if (this.amount>=600) Game.Unlock('Dodecillion fingers');	
-console.log(this.amount)
 			};
 	})();
 	
