@@ -118,14 +118,12 @@ CB.load = function(){
 }
 
 
-
 //Helper functions
 CB.Notify = function(msg){
 	if (document.hasFocus())
 		if (Game.prefs.popups) Game.Popup(msg);
 			else Game.Notify(msg,'','',1,1);
 }
-
 
 
 //Calling our initialization script
