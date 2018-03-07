@@ -71,11 +71,11 @@ CB.init = function(){
 	CB.loaded = true;
 	Game.Win('Third-party'); // Give you the Third Party achievement
 	
-	/*
+	
 	proceed=true;
 	proceed = confirm('Cookie Bliss loaded, do you want to also load Cookie Monster?');
 	if(proceed)
-		Game.LoadMod('http://aktanusa.github.io/CookieMonster/CookieMonster.js');*/
+		Game.LoadMod('http://aktanusa.github.io/CookieMonster/CookieMonster.js');
 }
 
 CB.addCustomUpgrade = function(name,description,cost,icon,order){
