@@ -15,12 +15,12 @@ CB.init = function(){
 		return;
 	
 	//Adding upgrades! Check out: http://orteil.dashnet.org/cookieclicker/img/icons.png?v=2.0045 for the icons.
+	//========Modifying the cursor cps/buyFunctions to introduce the new -illion finger upgrades.
 	CB.addCustomUpgrade('Nonillion fingers','The mouse and cursors gain <b>+50000000</b> cookies for each non-cursor object owned.<q>Lightning cracks, and from the portals spill forth an endless tide of fingers. </q>',10000000000000000000000000,[0,24],100);
 	CB.addCustomUpgrade('Decillion fingers','The mouse and cursors gain <b>+500000000</b> cookies for each non-cursor object owned.<q>This uncanny ritual involves fingerless gloves and concentrated nonbaryonic dark matter.</q>',10000000000000000000000000000,[12,24],100);
 	CB.addCustomUpgrade('Undecillion fingers','The mouse and cursors gain <b>+5000000000</b> cookies for each non-cursor object owned.<q>Plenty of fingers.</q>',10000000000000000000000000000000,[0,23],100);
-	CB.addCustomUpgrade('Dodecillion fingers','The mouse and cursors gain <b>+50000000000</b> cookies for each non-cursor object owned.<q>Fingers all the way down.</q>',10000000000000000000000000000000000,[12,23],100);
+	CB.addCustomUpgrade('Dodecillion fingers','The mouse and cursors gain <b>+50000000000</b> cookies for each non-cursor object owned.<q>Fingers are fractal -- for each fingertip equip a tiny little fingerglove hosting another hand with five more fingers. Recurse. Descend. Down to the atomic scale.</q>',10000000000000000000000000000000000,[12,23],100);
 	
-	//Modifying the cursor cps/buyFunctions to introduce the new -illion finger upgrades.
 	Game.Objects['Cursor'].cps = function(){
 		var add=0;
 		if (Game.Has('Thousand fingers')) add+=		0.1;
@@ -45,7 +45,6 @@ CB.init = function(){
 		return Game.ComputeCps(0.1,Game.Has('Reinforced index finger')+Game.Has('Carpal tunnel prevention cream')+Game.Has('Ambidextrous'),add)*mult;
 	}
 	
-	
 	Game.Objects['Cursor'].buyFunction = (function(){
 			var cachedFunc = Game.Objects['Cursor'].buyFunction;
 			return function(){
@@ -57,8 +56,7 @@ CB.init = function(){
 			};
 	})();
 	
-	
-	//loading relevant data, and saving it.
+	//===========loading relevant data, and saving it.
 	if(window.localStorage.getItem(CB.saveTo))
 		CB.load();
 	else {
@@ -73,10 +71,11 @@ CB.init = function(){
 	CB.loaded = true;
 	Game.Win('Third-party'); // Give you the Third Party achievement
 	
+	/*
 	proceed=true;
-	proceed = confirm('Cookie Bliss Loaded, do you want to also load Cookie Monster?');
+	proceed = confirm('Cookie Bliss loaded, do you want to also load Cookie Monster?');
 	if(proceed)
-		Game.LoadMod('http://aktanusa.github.io/CookieMonster/CookieMonster.js');
+		Game.LoadMod('http://aktanusa.github.io/CookieMonster/CookieMonster.js');*/
 }
 
 CB.addCustomUpgrade = function(name,description,cost,icon,order){
