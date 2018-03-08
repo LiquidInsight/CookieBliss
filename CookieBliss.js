@@ -19,7 +19,7 @@ CB.init = function(){
 	CB.addCustomUpgrade('Nonillion fingers','The mouse and cursors gain <b>+50000000</b> cookies for each non-cursor object owned.<q>Lightning cracks, and from the portals spill forth an endless tide of fingers. </q>',10000000000000000000000000,[0,24],100);
 	CB.addCustomUpgrade('Decillion fingers','The mouse and cursors gain <b>+500000000</b> cookies for each non-cursor object owned.<q>This uncanny ritual involves fingerless gloves and concentrated nonbaryonic dark matter.</q>',10000000000000000000000000000,[12,24],100);
 	CB.addCustomUpgrade('Undecillion fingers','The mouse and cursors gain <b>+5000000000</b> cookies for each non-cursor object owned.<q>Plenty of fingers.</q>',10000000000000000000000000000000,[0,23],100);
-	CB.addCustomUpgrade('Dodecillion fingers','The mouse and cursors gain <b>+50000000000</b> cookies for each non-cursor object owned.<q>Fingers are fractal -- for each fingertip equip a tiny little fingerglove hosting another hand with five more fingers. Recurse. Descend. Down to the atomic scale.</q>',10000000000000000000000000000000000,[12,23],100);
+	CB.addCustomUpgrade('Duodecillion fingers','The mouse and cursors gain <b>+50000000000</b> cookies for each non-cursor object owned.<q>Fingers are fractal -- for each fingertip equip a tiny little fingerglove hosting another hand with five more fingers. Recurse. Descend. Down to the atomic scale.</q>',10000000000000000000000000000000000,[12,23],100);
 	
 	Game.Objects['Cursor'].cps = function(){
 		var add=0;
@@ -35,7 +35,7 @@ CB.init = function(){
 		if (Game.Has('Nonillion fingers')) add+=	50000000;
 		if (Game.Has('Decillion fingers')) add+=	500000000;
 		if (Game.Has('Undecillion fingers')) add+=	5000000000;
-		if (Game.Has('Dodecillion fingers')) add+=	50000000000;
+		if (Game.Has('Duodecillion fingers')) add+=	50000000000;
 
 		var mult=1;
 		var num=0;
@@ -52,7 +52,7 @@ CB.init = function(){
 				if (this.amount>=450) Game.Unlock('Nonillion fingers');
 				if (this.amount>=500) Game.Unlock('Decillion fingers');
 				if (this.amount>=550) Game.Unlock('Undecillion fingers');
-				if (this.amount>=600) Game.Unlock('Dodecillion fingers');	
+				if (this.amount>=600) Game.Unlock('Duodecillion fingers');	
 			};
 	})();
 	
