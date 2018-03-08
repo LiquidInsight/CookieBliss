@@ -21,6 +21,7 @@ CB.init = function(){
 	CB.addCustomUpgrade('Undecillion fingers','The mouse and cursors gain <b>+5000000000</b> cookies for each non-cursor object owned.<q>Plenty of fingers.</q>',10000000000000000000000000000000,[0,23],100);
 	CB.addCustomUpgrade('Duodecillion fingers','The mouse and cursors gain <b>+50000000000</b> cookies for each non-cursor object owned.<q>Fingers are fractal -- for each fingertip equip a tiny little fingerglove hosting another hand with five more fingers. Recurse. Descend. Down to the atomic scale.</q>',10000000000000000000000000000000000,[12,23],100);
 	
+	
 	Game.Objects['Cursor'].cps = function(){
 		var add=0;
 		if (Game.Has('Thousand fingers')) add+=		0.1;
