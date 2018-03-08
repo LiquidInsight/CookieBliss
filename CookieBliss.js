@@ -3,6 +3,7 @@ var CB = {};
 CB.version = 2.0045;
 CB.saveTo = 'CookieBliss';
 CB.customUpgrades = [];
+CB.customAchievements = [];
 CB.loaded = false;
 
 //Initialization:
@@ -57,16 +58,32 @@ CB.init = function(){
 			};
 	})();
 	
+	//===========Adding new custom achievements
+	//Adding the -centenials
+	CB.addCustomAchievement('Tricentennial and a half','Have at least <b>350 of everything</b>.<q>Up, up, and away we go. Up, up, and I\'m liking it. Up, up, and away!</q>',[29,12],7002);
+	CB.addCustomAchievement('Quadricentenial','Have at least <b>400 of everything</b>.<q>You have, by now, conquered galaxies and converted their excess mass into dough, have thrummed the strings of the cosmos to warm the oven for innumerable cookies, and somehow you do this all with 400 of each building. Huh.</q>',[29,12],7002);
+	CB.addCustomAchievement('Quadricentenial and a half','Have at least <b>450 of everything</b><q>...</q>',[29,12],7002);
+	CB.addCustomAchievement('Quincentennial','Have at least <b>500 of everything</b><q>Call your family. Tell them you love them and need help..</q>',[29,12],7002);	
+	
+	//adding the fibbonacci award
+	CB.fibbonacciCached = [0,1]; //nth element of array is nth element of sequence A000045
+	for(var i = 2; i < 30; i++) CB.fibbonacciCached.push(CB.fibbonacciCached[i-1]+CB.fibbonacciCached[i-2]);	
+	CB.addCustomAchievement('Fibonacci','Have at least <b>0 of the most expensive object, 1 of the most second-most, 1 of the third-most, 2 of the next, 3 of the next, and then 5, and so on.</b> <q>Ah, what golden proportions!</q>',[23,12],Game.Achievements['Base 10'].order-0.001*Game.AchievementsN+0.0001); 
+	
+	//adding the wrinkler tickler
+	CB.addCustomAchievement('Wrinkler tickler','<b>Make a single wrinkler twitch for 30 consecutive seconds.</b> <q>Awww, coochie coochie coo! Who\'s a good little abyssal worm? <br/> You are!</q>',[19,8],21000); 
+
+	
 	//===========loading relevant data, and saving it.
 	if(window.localStorage.getItem(CB.saveTo))
 		CB.load();
 	else {
-		console.log('running save function');
 		Game.Objects['Cursor'].buyFunction();
 		CB.save();
 	}
 	Game.customSave.push(CB.save);
 	Game.customLoad.push(CB.load);
+	Game.customLogic.push(CB.logic);
 	
 	CB.Notify('Cookie Bliss loaded successfully.');
 	CB.loaded = true;
@@ -79,10 +96,56 @@ CB.init = function(){
 		Game.LoadMod('http://aktanusa.github.io/CookieMonster/CookieMonster.js');
 }
 
+
+CB.wrinklerBeingTickled = -1;
+CB.wrinklerTickleCount = 0;
+CB.logic = function(){
+	if(Game.T%(Game.fps*5) != 0)
+		return; // only execute our logic function every five seconds.
+	
+	//updating achievements!
+	var fewestNumberOfBuildings = 10000000;
+	var meetsFib = 1;
+	for (var i in Game.Objects){
+		fewestNumberOfBuildings = Math.min(fewestNumberOfBuildings,Game.Objects[i].amount);
+		meetsFib = ( CB.fibbonacciCached[(Game.ObjectsN-Game.Objects[i].id-1)] > Game.Objects[i].amount ) ? 0 : meetsFib;
+	}
+	
+	//checking for the quadricentenial / tricentenial and half, etc.
+	if(fewestNumberOfBuildings >= 350) { Game.Win('Tricentennial and a half'); }
+	if(fewestNumberOfBuildings >= 400) { Game.Win('Quadricentenial'); }
+	if(fewestNumberOfBuildings >= 450) { Game.Win('Quadricentenial and a half'); }
+	if(fewestNumberOfBuildings >= 500) { Game.Win('Quincentennial'); }
+	if(meetsFib)Game.Win('Fibonacci');
+	
+	//checking the wrinkler tickler.
+	var notickles = 1;
+	for(var i in Game.wrinklers)
+		if(Game.wrinklers[i].selected){
+			notickles = 0;
+			if(CB.wrinklerBeingTickled == i){
+				CB.wrinklerTickleCount++;
+				if(CB.wrinklerTickleCount > 6) Game.Win('Wrinkler tickler');
+			}
+			else{
+				CB.wrinklerTickleCount=0;
+				CB.wrinklerBeingTickled = i;
+			}
+		}
+	if(notickles)
+		wrinklerBeingTickled = -1;
+}
+
 CB.addCustomUpgrade = function(name,description,cost,icon,order){
 	new Game.Upgrade(name,description,cost,icon);
 	Game.Upgrades[name].order = order + Game.Upgrades[name].id*.001;
 	CB.customUpgrades.push(name);
+}
+
+CB.addCustomAchievement = function(name,description,icon,order){
+	new Game.Achievement(name,description,icon)
+	Game.Achievements[name].order = order + Game.Achievements[name].id*.001;
+	CB.customAchievements.push(name);
 }
 
 //call this, and then CB.save if your save is broken I guess?
@@ -91,17 +154,22 @@ CB.clearSave = function(){
 }
 
 CB.save = function(){
-	CBState = {};
+	var CBState = {};
 	CBState.upg = [];
 	for (var i in CB.customUpgrades){
 		var upg = CB.customUpgrades[i];
 		CBState.upg[i] = [upg, Game.HasUnlocked(upg), Game.Upgrades[upg].bought];
 	}
+	CBState.achievements = [];
+	for (var i in CB.customAchievements){
+		var cheevo = CB.customAchievements[i];
+		CBState.achievements[i] = [cheevo,Game.HasAchiev(cheevo)];
+	}
 	window.localStorage.setItem(CB.saveTo,JSON.stringify(CBState))
 }
 
 CB.load = function(){
-	CBState = JSON.parse(window.localStorage.getItem(CB.saveTo));
+	var CBState = JSON.parse(window.localStorage.getItem(CB.saveTo));
 	for(var i in CB.customUpgrades){ //checking each of the defined upgrades against the save file
 		var upg = CB.customUpgrades[i];
 		if(CBState.upg) {
@@ -115,6 +183,25 @@ CB.load = function(){
 			}
 		}
 	}
+	
+	for(var i in CB.customAchievements){
+		var cheevo = CB.customAchievements[i];
+		if(CBState.achievements){
+			for(var j in CBState.achievements){
+				if(cheevo === CBState.achievements[j][0]){
+					if(CBState.achievements[j][1]){
+						Game.Achievements[cheevo].won=1;
+						if(Game.Achievements[cheevo].pool!='shadow')
+							Game.AchievementsOwned++;
+					}
+					else{
+						Game.Achievements[cheevo].won=0
+					}
+				}
+			}
+		}
+	}
+	Game.recalculateGains=1;
 }
 
 
