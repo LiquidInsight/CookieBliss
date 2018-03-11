@@ -58,6 +58,12 @@ CB.init = function(){
 			};
 	})();
 	
+	//Adding new kittens!
+		order=20000;
+		new Game.Upgrade('Kitten logisticians','You gain <b>more CpS</b> the more milk you have.<q>It\'s simple. Meowve product, grow business.</q>',900000000000000000000000000000000000000,[18,21]);Game.last.kitten=1;
+		new Game.Upgrade('Kitten investors','You gain <b>more CpS</b> the more milk you have.<q>Buy low, cat nap, sell high.</q>',900000000000000000000000000000000000000000,[18,25]);Game.last.kitten=1;
+		new Game.Upgrade('Kitten executives','You gain <b>more CpS</b> the more milk you have.<q>Let\'s synergize our core competencies and leverage our purrfect track record.</q>',900000000000000000000000000000000000000000000,[18,26]);Game.last.kitten=1;
+	
 	//===========Adding new custom achievements
 	//Adding the -centenials
 	CB.addCustomAchievement('Tricentennial and a half','Have at least <b>350 of everything</b>.<q>Up, up, and away we go. Up, up, and I\'m liking it. Up, up, and away!</q>',[29,12],7002);
@@ -84,6 +90,7 @@ CB.init = function(){
 	Game.customSave.push(CB.save);
 	Game.customLoad.push(CB.load);
 	Game.customLogic.push(CB.logic);
+	Game.customCpsMult.push(CB.customCpsMult);
 	
 	CB.Notify('Cookie Bliss loaded successfully.');
 	CB.loaded = true;
@@ -102,6 +109,11 @@ CB.wrinklerTickleCount = 0;
 CB.logic = function(){
 	if(Game.T%(Game.fps*5) != 0)
 		return; // only execute our logic function every five seconds.
+	
+	if(Game.milkProgress>=10) Game.Unlock('Kitten logisticians');
+	if(Game.milkProgress>=11) Game.Unlock('Kitten investors');
+	if(Game.milkProgress>=12) Game.Unlock('Kitten executives');
+	
 	
 	//updating achievements!
 	var fewestNumberOfBuildings = 10000000;
@@ -134,6 +146,28 @@ CB.logic = function(){
 		}
 	if(notickles)
 		wrinklerBeingTickled = -1;
+}
+
+CB.customCpsMult = function(){
+	//effecting the custom kitten upgrades.
+	var mult = 1.0;	
+	var milkMult=1.0;
+	
+	if (Game.Has('Santa\'s milk and cookies')) milkMult*=1.05;
+	if (Game.hasAura('Breath of Milk')) milkMult*=1.05;
+	if (Game.hasGod)
+	{
+		var godLvl=Game.hasGod('mother');
+		if (godLvl==1) milkMult*=1.1;
+		else if (godLvl==2) milkMult*=1.06;
+		else if (godLvl==3) milkMult*=1.03;
+	}
+	
+	if (Game.Has('Kitten logisticians')) mult*=(1+Game.milkProgress*0.2*milkMult);
+	if (Game.Has('Kitten investors')) mult*=(1+Game.milkProgress*0.2*milkMult);
+	if (Game.Has('Kitten executives')) mult*=(1+Game.milkProgress*0.2*milkMult);
+
+	return mult;
 }
 
 CB.addCustomUpgrade = function(name,description,cost,icon,order){
