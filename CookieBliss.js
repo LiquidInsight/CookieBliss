@@ -59,11 +59,11 @@ CB.init = function(){
 	})();
 	
 	//Adding new kittens!
-		order=20000;
-		new Game.Upgrade('Kitten logisticians','You gain <b>more CpS</b> the more milk you have.<q>It\'s simple. Meowve product, grow business.</q>',900000000000000000000000000000000000000,[18,21]);Game.last.kitten=1;
-		new Game.Upgrade('Kitten investors','You gain <b>more CpS</b> the more milk you have.<q>Buy low, cat nap, sell high.</q>',900000000000000000000000000000000000000000,[18,25]);Game.last.kitten=1;
-		new Game.Upgrade('Kitten executives','You gain <b>more CpS</b> the more milk you have.<q>Let\'s synergize our core competencies and leverage our purrfect track record.</q>',900000000000000000000000000000000000000000000,[18,26]);Game.last.kitten=1;
-	
+	order=20000;
+	new Game.Upgrade('Kitten logisticians','You gain <b>more CpS</b> the more milk you have.<q>It\'s simple. Meowve product, grow business.</q>',900000000000000000000000000000000000000,[18,21]);Game.last.kitten=1;
+	new Game.Upgrade('Kitten investors','You gain <b>more CpS</b> the more milk you have.<q>Buy low, cat nap, sell high.</q>',900000000000000000000000000000000000000000,[18,25]);Game.last.kitten=1;
+	new Game.Upgrade('Kitten executives','You gain <b>more CpS</b> the more milk you have.<q>Let\'s synergize our core competencies and leverage our purrfect track record.</q>',900000000000000000000000000000000000000000000,[18,26]);Game.last.kitten=1;
+
 	//===========Adding new custom achievements
 	//Adding the -centenials
 	CB.addCustomAchievement('Tricentennial and a half','Have at least <b>350 of everything</b>.<q>Up, up, and away we go. Up, up, and I\'m liking it. Up, up, and away!</q>',[29,12],7002);
@@ -77,8 +77,14 @@ CB.init = function(){
 	CB.addCustomAchievement('Fibonacci','Have at least <b>0 of the most expensive object, 1 of the most second-most, 1 of the third-most, 2 of the next, 3 of the next, and then 5, and so on.</b> <q>Ah, what golden proportions!</q>',[23,12],Game.Achievements['Base 10'].order-0.001*Game.AchievementsN+0.0001); 
 	
 	//adding the wrinkler tickler
-	CB.addCustomAchievement('Wrinkler tickler','<b>Make a single wrinkler twitch for 30 consecutive seconds.</b> <q>Awww, coochie coochie coo! Who\'s a good little abyssal worm? <br/> You are!</q>',[19,8],21000); 
-
+	CB.addCustomAchievement('Wrinkler tickler','Make a single wrinkler twitch for <b>30 consecutive seconds</b>. <q>Awww, coochie coochie coo! Who\'s a good little abyssal worm? <br/> You are!</q>',[19,8],21000); 
+	
+	//adding the kitten-caboodle upgrade. 
+	CB.addCustomAchievement('The whole kitten caboodle','<b>Unlock every kitten</b> in the vanilla game. <q>Such cute kitty capers.</q>',[18,0],11000);
+	CB.vanillaKittenUpgrades=[];
+	for(var i in Game.Upgrades)
+		if(Game.Upgrades[i].kitten && Game.Upgrades[i].vanilla)
+			CB.vanillaKittenUpgrades.push(i);
 	
 	//===========loading relevant data, and saving it.
 	if(window.localStorage.getItem(CB.saveTo))
@@ -115,8 +121,8 @@ CB.logic = function(){
 	if(Game.milkProgress>=12) Game.Unlock('Kitten executives');
 	
 	
-	//updating achievements!
-	var fewestNumberOfBuildings = 10000000;
+	//===updating achievements!
+	var fewestNumberOfBuildings = 1000000000;
 	var meetsFib = 1;
 	for (var i in Game.Objects){
 		fewestNumberOfBuildings = Math.min(fewestNumberOfBuildings,Game.Objects[i].amount);
@@ -146,6 +152,13 @@ CB.logic = function(){
 		}
 	if(notickles)
 		wrinklerBeingTickled = -1;
+	
+	//checking for the kitten caboodle achievement!
+	var allKittens = 1;
+	for(var i in CB.vanillaKittenUpgrades)
+		allKittens = (allKittens && Game.Has(CB.vanillaKittenUpgrades[i]));
+	if(allKittens)
+		Game.Win('The whole kitten caboodle');
 }
 
 CB.customCpsMult = function(){
