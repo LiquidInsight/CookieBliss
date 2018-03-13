@@ -85,6 +85,23 @@ CB.init = function(){
 	for(var i in Game.Upgrades)
 		if(Game.Upgrades[i].kitten && Game.Upgrades[i].vanilla)
 			CB.vanillaKittenUpgrades.push(i);
+		
+	//Adding the new reset upgrades.
+	CB.addCustomAchievement('Ragnarok','Ascend with <b>1 undecillion</b> cookies baked. <q>and roll.</q>',[10,9],30050);
+	CB.addCustomAchievement('Apocalypse','Ascend with <b>1 duodecillion</b> cookies baked. <q>The end of an epoch.</q>',[10,9],30050);
+	CB.addCustomAchievement('Eschatology','Ascend with <b>1 tredecillion</b> cookies baked. <q>Were we found wanting, we whose amibitions strip mined galaxies and plundered universes in the name of cookies? Who judges we?</q>',[10,9],30050);
+	Game.Reset = (function(){
+			var cachedFunc = Game.Reset;
+			return function(){
+				var cookiesForfeited=Game.cookiesEarned;
+				if (cookiesForfeited>=1000000000000000000000000000000000000) Game.Win('Ragnarok');
+				if (cookiesForfeited>=1000000000000000000000000000000000000000) Game.Win('Apocalypse');
+				if (cookiesForfeited>=1000000000000000000000000000000000000000000) Game.Win('Eschatology');
+				cachedFunc.apply(this,arguments);
+			};
+	})();
+	
+	//1899
 	
 	//===========loading relevant data, and saving it.
 	if(window.localStorage.getItem(CB.saveTo))
@@ -231,17 +248,19 @@ CB.load = function(){
 		}
 	}
 	
-	for(var i in CB.customAchievements){
+	for(var i in CB.customAchievements){//iterate over all of the custom achievements 
 		var cheevo = CB.customAchievements[i];
-		if(CBState.achievements){
+		if(CBState.achievements){ //iterate over all of the savefile achievements 
 			for(var j in CBState.achievements){
-				if(cheevo === CBState.achievements[j][0]){
-					if(CBState.achievements[j][1]){
-						Game.Achievements[cheevo].won=1;
-						if(Game.Achievements[cheevo].pool!='shadow')
-							Game.AchievementsOwned++;
+				if(cheevo === CBState.achievements[j][0]){ //check each of the savefile achievements to see if it matches something we've added to the game!
+					if(CBState.achievements[j][1]){ //if the save file says we've won it 
+						if(!Game.Achievements[cheevo].won){ //and we haven't yet 
+							Game.Achievements[cheevo].won=1; //add it
+							if(Game.Achievements[cheevo].pool!='shadow')
+								Game.AchievementsOwned++;
+						}
 					}
-					else{
+					else{//savefile says we haven't won it, so we probably shouldn't have it.
 						Game.Achievements[cheevo].won=0
 					}
 				}
