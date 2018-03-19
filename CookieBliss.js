@@ -79,7 +79,7 @@ CB.init = function(){
 	//adding the wrinkler tickler
 	CB.addCustomAchievement('Wrinkler tickler','Make a single wrinkler twitch for <b>30 consecutive seconds</b>. <q>Awww, coochie coochie coo! Who\'s a good little abyssal worm? <br/> You are!</q>',[19,8],21000); 
 	
-	//adding the kitten-caboodle upgrade. 
+	//adding the kitten caboodle upgrade. 
 	CB.addCustomAchievement('The whole kitten caboodle','<b>Unlock every kitten</b> in the vanilla game. <q>Such cute kitty capers.</q>',[18,0],11000);
 	CB.vanillaKittenUpgrades=[];
 	for(var i in Game.Upgrades)
@@ -87,9 +87,9 @@ CB.init = function(){
 			CB.vanillaKittenUpgrades.push(i);
 		
 	//Adding the new reset upgrades.
-	CB.addCustomAchievement('Ragnarok','Ascend with <b>1 undecillion</b> cookies baked. <q>and roll.</q>',[10,9],30050);
-	CB.addCustomAchievement('Apocalypse','Ascend with <b>1 duodecillion</b> cookies baked. <q>The end of an epoch.</q>',[10,9],30050);
-	CB.addCustomAchievement('Eschatology','Ascend with <b>1 tredecillion</b> cookies baked. <q>Were we found wanting, we whose amibitions strip mined galaxies and plundered universes in the name of cookies? Who judges we?</q>',[10,9],30050);
+	CB.addCustomAchievement('Ragnarok','Ascend with <b>1 undecillion</b> cookies baked. <q>and roll.</q>',[29,6],30050);
+	CB.addCustomAchievement('Apocalypse','Ascend with <b>1 duodecillion</b> cookies baked. <q>The end of an epoch.</q>',[29,6],30050);
+	CB.addCustomAchievement('Eschatology','Ascend with <b>1 tredecillion</b> cookies baked. <q>Who dare find us wanting, we whose amibitions strip mined galaxies and plundered nebulae in the name of cookies? Who judges we?</q>',[29,6],30050);
 	Game.Reset = (function(){
 			var cachedFunc = Game.Reset;
 			return function(){
@@ -100,9 +100,7 @@ CB.init = function(){
 				cachedFunc.apply(this,arguments);
 			};
 	})();
-	
-	//1899
-	
+		
 	//===========loading relevant data, and saving it.
 	if(window.localStorage.getItem(CB.saveTo))
 		CB.load();
@@ -118,7 +116,6 @@ CB.init = function(){
 	CB.Notify('Cookie Bliss loaded successfully.');
 	CB.loaded = true;
 	Game.Win('Third-party'); // Give you the Third Party achievement
-	
 	
 	proceed=true;
 	proceed = confirm('Cookie Bliss loaded, do you want to also load Cookie Monster?');
