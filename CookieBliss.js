@@ -59,10 +59,9 @@ CB.init = function(){
 	})();
 	
 	//Adding new kittens!
-	order=20000;
-	new Game.Upgrade('Kitten logisticians','You gain <b>more CpS</b> the more milk you have.<q>It\'s simple. Meowve product, grow business.</q>',900000000000000000000000000000000000000,[18,21]);Game.last.kitten=1;
-	new Game.Upgrade('Kitten investors','You gain <b>more CpS</b> the more milk you have.<q>Buy low, cat nap, sell high.</q>',900000000000000000000000000000000000000000,[18,25]);Game.last.kitten=1;
-	new Game.Upgrade('Kitten executives','You gain <b>more CpS</b> the more milk you have.<q>Let\'s synergize our core competencies and leverage our purrfect track record.</q>',900000000000000000000000000000000000000000000,[18,26]);Game.last.kitten=1;
+	CB.addCustomUpgrade('Kitten logisticians','You gain <b>more CpS</b> the more milk you have.<q>It\'s simple. Meowve product, grow business.</q>',900000000000000000000000000000000000000,[18,21],20000);Game.last.kitten=1;
+	CB.addCustomUpgrade('Kitten investors','You gain <b>more CpS</b> the more milk you have.<q>Buy low, cat nap, sell high.</q>',900000000000000000000000000000000000000000,[18,25],20000);Game.last.kitten=1;
+	CB.addCustomUpgrade('Kitten executives','You gain <b>more CpS</b> the more milk you have.<q>Let\'s synergize our core competencies and leverage our purrfect track record.</q>',900000000000000000000000000000000000000000000,[18,26],20000);Game.last.kitten=1;
 
 	//===========Adding new custom achievements
 	//Adding the -centenials
