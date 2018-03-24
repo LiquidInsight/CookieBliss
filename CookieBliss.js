@@ -65,7 +65,7 @@ CB.init = function(){
 
 	//===========Adding new custom achievements
 	//Adding the -centenials
-	CB.addCustomAchievement('Tricentennial and a half','Have at least <b>350 of everything</b>.<q>Up, up, and away we go. Up, up, and I\'m liking it. Up, up, and away!</q>',[29,12],7002);
+	CB.addCustomAchievement('Tricentennial and a half','Have at least <b>350 of everything</b>.<q>Up, up, and away we go.</q>',[29,12],7002);
 	CB.addCustomAchievement('Quadricentenial','Have at least <b>400 of everything</b>.<q>You have, by now, conquered galaxies and converted their excess mass into dough, have thrummed the strings of the cosmos to warm the oven for innumerable cookies, and somehow you do this all with 400 of each building. Huh.</q>',[29,12],7002);
 	CB.addCustomAchievement('Quadricentenial and a half','Have at least <b>450 of everything</b><q>...</q>',[29,12],7002);
 	CB.addCustomAchievement('Quincentennial','Have at least <b>500 of everything</b><q>Call your family. Tell them you love them and need help..</q>',[29,12],7002);	
