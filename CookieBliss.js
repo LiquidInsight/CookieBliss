@@ -2,7 +2,7 @@
 
 //The cookie bliss mod object:
 var CB = {};
-CB.version = 2.012; 
+CB.version = 2.016; 
 CB.saveTo = 'CookieBliss';
 CB.customUpgrades = [];
 CB.customAchievements = [];
